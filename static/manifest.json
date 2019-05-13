@@ -1,10 +1,10 @@
 {
-  "short_name": "Next PWA",
-  "name": "Next PWA Boilerplate",
+  "short_name": "Tobcity",
+  "name": "Tobcity Divide Tus Gastos",
   "icons": [
     {
-      "src": "/static/graphics/icon-144.png",
-      "sizes": "144x144",
+      "src": "/static/graphics/icon-114.png",
+      "sizes": "114x114",
       "type": "image/png"
     },
     {
@@ -20,6 +20,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#fff",
+  "theme_color": "#2aa89a",
   "background_color": "#000"
 }

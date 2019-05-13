@@ -1,22 +1,19 @@
-import Document, { Head, Main, NextScript } from "next/document";
-import { ServerStyleSheet } from "styled-components";
+import Document, { Head, Main, NextScript } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
 
-export const title = "Next.js PWA Boilerplate";
-const description =
-  "Next.js PWA Boilerplate starts your progressive web app off with a perfect Google Lighthouse score.";
-const url = `https://next-pwa-boilerplate.now.sh`;
-const thumbnail = `${url}/static/graphics/thumbnail.png`;
+export const title = 'Tobcity Divide Tus Gastos'
+const description = 'Next.js PWA Boilerplate starts your progressive web app off with a perfect Google Lighthouse score.'
+const url = 'http://localhost:3000'
+const thumbnail = `${url}/static/graphics/thumbnail.png`
 
 export default class MyDocument extends Document {
   // This snippet will collect all of page’s critical CSS
   // while the is being server-side rendered
   static getInitialProps({ renderPage }) {
-    const sheet = new ServerStyleSheet();
-    const page = renderPage(App => props =>
-      sheet.collectStyles(<App {...props} />)
-    );
-    const styleTags = sheet.getStyleElement();
-    return { ...page, styleTags };
+    const sheet = new ServerStyleSheet()
+    const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
+    const styleTags = sheet.getStyleElement()
+    return { ...page, styleTags }
   }
 
   render() {
@@ -26,14 +23,17 @@ export default class MyDocument extends Document {
           {/* Performance: Inject the page’s critical CSS in the <head> tag */}
           {this.props.styleTags}
 
-          {/* Progressive Web App: Match the width of app’s content with width of viewport for mobile devices */}
+          {/* Progressive Web App: Match the width of app’s content with width
+            of viewport for mobile devices */}
           <meta name="viewport" content="width=device-width, initial-scale=1" />
 
           {/* Progressive Web App: Have address bar match brand colors */}
-          <meta name="theme-color" content="#fff" />
+          <meta name="theme-color" content="#2aa89a" />
 
           {/* Progressive Web App: Provide manifest file for metadata */}
           <link rel="manifest" href="./static/manifest.json" />
+          <link rel="icon" href="/static/favicon.ico" />
+          <link href="https://fonts.googleapis.com/css?family=Baloo+Tammudu|Quicksand|Raleway" rel="stylesheet"></link>
 
           {/* SEO: App description for search-engine optimization */}
           <meta name="Description" content={description} />
@@ -118,6 +118,6 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </html>
-    );
+    )
   }
 }

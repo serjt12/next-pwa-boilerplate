@@ -1,46 +1,38 @@
-import Link from "next/link";
-import styled from "styled-components";
-import { title } from "../pages/_document";
+import Link from 'next/link'
+import { Layout, Menu } from 'antd'
 
-const Container = styled.nav`
-  background: #ddd;
-`;
-
-const Content = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: var(--max-width);
-  padding: 0 var(--padding);
-`;
-
-const Credits = styled.a`
-  margin: 0.5rem 0;
-`;
-
-const H1 = styled.h1`
-  font-size: 1rem;
-  margin: 0.5rem 0;
-`;
-
+const { Header } = Layout
 const Nav = () => (
-  <Container>
-    <Content>
-      <Link as={`/`} href={`/`}>
-        <H1>
-          <a href="/">{title}</a>
-        </H1>
-      </Link>
-      <Credits
-        href="https://github.com/pingboard/next-pwa-boilerplate"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        Repo
-      </Credits>
-    </Content>
-  </Container>
-);
+  <Header>
+    <Menu
+      mode="horizontal"
+      defaultSelectedKeys={['1']}
+      style={{ lineHeight: '64px' }}
+    >
+      <Menu.Item key="1">
+        <Link href="/">
+          <a href="#">Home</a>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link href="/about">
+          <a href="#">Nosotros</a>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link href="/terms">
+          <a href="#">Terminos Y Condiciones</a>
+        </Link>
+      </Menu.Item>
+    </Menu>
+    <style scoped>
+      {`
+        .ant-layout-header {
+          background: white;
+        }
+      `}
+    </style>
+  </Header>
+)
 
-export default Nav;
+export default Nav

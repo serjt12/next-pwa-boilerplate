@@ -2,18 +2,25 @@
 // Network-first strategy means that if there is no internet connection,
 // the browser will use files previously saved locally to the user’s device instead.
 // AKA Offline Mode!
-const withOffline = require("next-offline");
+const withOffline = require('next-offline')
+const withCss = require('@zeit/next-css')
+const withImages = require('next-images')
+const withESLint = require('next-eslint')
+// Fix: prevents error when .css files are required by node
+if (typeof require !== 'undefined') {
+  require.extensions['.css'] = file => {}
+}
 
 const nextConfig = {
-  target: "serverless",
+  target: 'serverless',
   workboxOpts: {
-    swDest: "static/service-worker.js",
+    swDest: 'static/service-worker.js',
     runtimeCaching: [
       {
         urlPattern: /^https?.*/,
-        handler: "networkFirst",
+        handler: 'networkFirst',
         options: {
-          cacheName: "https-calls",
+          cacheName: 'https-calls',
           networkTimeoutSeconds: 15,
           expiration: {
             maxEntries: 150,
@@ -26,6 +33,11 @@ const nextConfig = {
       }
     ]
   }
-};
+}
 
-module.exports = withOffline(nextConfig);
+module.exports = withESLint({
+  eslintLoaderOptions: {
+    quiet: true
+  }
+})
+module.exports = withImages(withCss(withOffline(nextConfig)))
