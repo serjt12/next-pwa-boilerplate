@@ -1,42 +1,4 @@
-/**
- * next-auth.functions.js Example
- *
- * This file defines functions NextAuth to look up, add and update users.
- *
- * It returns a Promise with the functions matching these signatures:
- *
- * {
- *   find: ({
- *     id,
- *     email,
- *     emailToken,
- *     provider,
- *     poviderToken
- *   } = {}) => {},
- *   update: (user) => {},
- *   insert: (user) => {},
- *   remove: (id) => {},
- *   serialize: (user) => {},
- *   deserialize: (id) => {}
- * }
- *
- * Each function returns Promise.resolve() - or Promise.reject() on error.
- *
- * This specific example supports both MongoDB and NeDB, but can be refactored
- * to work with any database.
- *
- * Environment variables for this example:
- *
- * MONGO_URI=mongodb://localhost:27017/my-database
- * EMAIL_FROM=username@gmail.com
- * EMAIL_SERVER=smtp.gmail.com
- * EMAIL_PORT=465
- * EMAIL_USERNAME=username@gmail.com
- * EMAIL_PASSWORD=p4ssw0rd
- *
- * If you wish, you can put these in a `.env` to seperate your environment 
- * specific configuration from your code.
- **/
+
 
 // Load environment variables from a .env file if one exists
 require('dotenv').config()
@@ -200,24 +162,24 @@ module.exports = () => {
       // storing user supplied passwords anywhere, preventing password re-use.
       //
       // To disable this option, do not set sendSignInEmail (or set it to null).
-      // sendSignInEmail: ({email, url, req}) => {
-      //   nodemailer
-      //   .createTransport(nodemailerTransport)
-      //   .sendMail({
-      //     to: email,
-      //     from: process.env.EMAIL_FROM,
-      //     subject: 'Sign in link',
-      //     text: `Use the link below to sign in:\n\n${url}\n\n`,
-      //     html: `<p>Use the link below to sign in:</p><p>${url}</p>`
-      //   }, (err) => {
-      //     if (err) {
-      //       console.error('Error sending email to ' + email, err)
-      //     }
-      //   })
-      //   if (process.env.NODE_ENV === 'development')  {
-      //     console.log('Generated sign in link ' + url + ' for ' + email)
-      //   }
-      // },
+      sendSignInEmail: ({email, url, req}) => {
+        nodemailer
+        .createTransport(nodemailerTransport)
+        .sendMail({
+          to: email,
+          from: process.env.EMAIL_FROM,
+          subject: 'Sign in link',
+          text: `Use the link below to sign in:\n\n${url}\n\n`,
+          html: `<p>Use the link below to sign in:</p><p>${url}</p>`
+        }, (err) => {
+          if (err) {
+            console.error('Error sending email to ' + email, err)
+          }
+        })
+        if (process.env.NODE_ENV === 'development')  {
+          console.log('Generated sign in link ' + url + ' for ' + email)
+        }
+      },
       // Credentials Sign In
       //
       // If you use this you will need to define your own way to validate 
@@ -227,27 +189,27 @@ module.exports = () => {
       // This feature is intended for strategies like Two Factor Authentication.
       //
       // To disable this option, do not set signin (or set it to null).
-      signIn: ({form, req}) => {
-        return new Promise((resolve, reject) => {
-          // Should validate credentials (e.g. hash password, compare 2FA token
-          // etc) and return a valid user object from a database.
-            return usersCollection.findOne({
-            email: form.email
-          }, (err, user) => {
-            if (err) return reject(err)
-            if (!user) return resolve(null)
+      // signIn: ({form, req}) => {
+      //   return new Promise((resolve, reject) => {
+      //     // Should validate credentials (e.g. hash password, compare 2FA token
+      //     // etc) and return a valid user object from a database.
+      //       return usersCollection.findOne({
+      //       email: form.email
+      //     }, (err, user) => {
+      //       if (err) return reject(err)
+      //       if (!user) return resolve(null)
             
-            // Check credentials - e.g. compare bcrypt password hashes
-            if (form.password === "test1234") {
-              // If valid, return user object - e.g. { id, name, email }
-              return resolve(user)
-            } else {
-              // If invalid, return null
-              return resolve(null)
-            }
-          })
-        })
-      },
+      //       // Check credentials - e.g. compare bcrypt password hashes
+      //       if (form.password === "test1234") {
+      //         // If valid, return user object - e.g. { id, name, email }
+      //         return resolve(user)
+      //       } else {
+      //         // If invalid, return null
+      //         return resolve(null)
+      //       }
+      //     })
+      //   })
+      // },
       // Session Object (optional)
       //
       // The session object that gets returned to the client. You don't need to
